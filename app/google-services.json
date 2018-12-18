@@ -1,35 +1,66 @@
 {
   "project_info": {
-    "project_number": "897841206929",
-    "firebase_url": "https://borgy-716b2.firebaseio.com",
-    "project_id": "borgy-716b2",
-    "storage_bucket": "borgy-716b2.appspot.com"
+    "project_number": "810384711315",
+    "firebase_url": "https://toktok-a05cc.firebaseio.com",
+    "project_id": "toktok-a05cc",
+    "storage_bucket": "toktok-a05cc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:897841206929:android:62c8ce5439b703bc",
+        "mobilesdk_app_id": "1:810384711315:android:8de18792207f455f",
+        "android_client_info": {
+          "package_name": "com.fekrah.toktokcontrol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810384711315-l5dss7u14ev4ju454914v93b60imtl70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2AKSTPrPQImNJldmw1THIfDAJqr89xIE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810384711315:android:62c8ce5439b703bc",
         "android_client_info": {
           "package_name": "com.fekrah.toktokcustomer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "897841206929-1o5tkdmansdb6ik1212n57gnfa8u6uno.apps.googleusercontent.com",
+          "client_id": "810384711315-ba6rjdodnhip6l7ndt3duvmklibc9ke7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fekrah.toktokcustomer",
-            "certificate_hash": "5291fc05de374dfa2c0a449bf47a131030ac70d6"
+            "certificate_hash": "7c3fb044b6d97df030451eb234ab2059b5d6521a"
           }
         },
         {
-          "client_id": "897841206929-o8ggp278lakfhq8250ncgah7jltpih2k.apps.googleusercontent.com",
+          "client_id": "810384711315-l5dss7u14ev4ju454914v93b60imtl70.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBtpaebiFn1EcYJC-yGx9Dg6xLICHZ3TRM"
+          "current_key": "AIzaSyC2AKSTPrPQImNJldmw1THIfDAJqr89xIE"
         }
       ],
       "services": {
@@ -40,7 +71,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "897841206929-o8ggp278lakfhq8250ncgah7jltpih2k.apps.googleusercontent.com",
+              "client_id": "810384711315-l5dss7u14ev4ju454914v93b60imtl70.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -52,28 +83,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:897841206929:android:52a826aecd7a5d1d",
+        "mobilesdk_app_id": "1:810384711315:android:52a826aecd7a5d1d",
         "android_client_info": {
           "package_name": "com.fekrah.toktokdriver"
         }
       },
       "oauth_client": [
         {
-          "client_id": "897841206929-l9niik4pfvfjtlhdmj1eqptjm7276o1d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fekrah.toktokdriver",
-            "certificate_hash": "5291fc05de374dfa2c0a449bf47a131030ac70d6"
-          }
-        },
-        {
-          "client_id": "897841206929-o8ggp278lakfhq8250ncgah7jltpih2k.apps.googleusercontent.com",
+          "client_id": "810384711315-l5dss7u14ev4ju454914v93b60imtl70.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBtpaebiFn1EcYJC-yGx9Dg6xLICHZ3TRM"
+          "current_key": "AIzaSyC2AKSTPrPQImNJldmw1THIfDAJqr89xIE"
         }
       ],
       "services": {
@@ -81,13 +104,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "897841206929-o8ggp278lakfhq8250ncgah7jltpih2k.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

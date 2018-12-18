@@ -17,6 +17,8 @@ public class Order implements Serializable {
     private double r_l_lng;
     private double a_l_lat;
     private double a_l_lng;
+    private String name;
+    private String image;
 
     public Order() {
     }
@@ -49,6 +51,40 @@ public class Order implements Serializable {
         this.r_l_lng = r_l_lng;
         this.a_l_lat = a_l_lat;
         this.a_l_lng = a_l_lng;
+    }
+
+    public Order(String order_key, String cost, String receiver_location, String arrival_location, String distance, String details, String notes, String user_key, long time, double r_l_lat, double r_l_lng, double a_l_lat, double a_l_lng, String name, String image) {
+        this.order_key = order_key;
+        this.cost = cost;
+        this.receiver_location = receiver_location;
+        this.arrival_location = arrival_location;
+        this.distance = distance;
+        this.details = details;
+        this.notes = notes;
+        this.user_key = user_key;
+        this.time = time;
+        this.r_l_lat = r_l_lat;
+        this.r_l_lng = r_l_lng;
+        this.a_l_lat = a_l_lat;
+        this.a_l_lng = a_l_lng;
+        this.name = name;
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public double getR_l_lat() {

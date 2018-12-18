@@ -285,7 +285,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
-            android:text="@string/send_offer"
+            android:text="قبول الطلب"
             android:textColor="@color/white"
             drawme:dm_backColor="@color/green"
             drawme:dm_backColorPressed="@color/colorPrimary"

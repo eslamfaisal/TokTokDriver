@@ -6,7 +6,6 @@ public class OrderResponse implements Serializable {
 
     private String driver_name;
     private String Response_key;
-    private String cost;
     private String distance;
     private String driver_key;
     private String driver_image;
@@ -18,10 +17,10 @@ public class OrderResponse implements Serializable {
     public OrderResponse() {
     }
 
-    public OrderResponse(String driver_name, String response_key, String cost, String distance, String driver_key, String driver_image, String edtimated_time, int driver_rating_count, float driver_rating) {
+    public OrderResponse(String driver_name, String response_key, String distance, String driver_key, String driver_image, String edtimated_time, int driver_rating_count, float driver_rating) {
         this.driver_name = driver_name;
         Response_key = response_key;
-        this.cost = cost;
+
         this.distance = distance;
         this.driver_key = driver_key;
         this.driver_image = driver_image;
@@ -54,13 +53,6 @@ public class OrderResponse implements Serializable {
         Response_key = response_key;
     }
 
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
 
     public String getDistance() {
         return distance;

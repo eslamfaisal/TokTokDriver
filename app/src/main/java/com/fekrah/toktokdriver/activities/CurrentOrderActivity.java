@@ -169,7 +169,6 @@ public class CurrentOrderActivity extends BaseActivity {
                 final OrderResponse offer = new OrderResponse(
                         MainActivity.driver.getName(),
                         key,
-                        costEdt.getText().toString(),
                         MainActivity.results[0],
                         MainActivity.driver.getUser_key(),
                         MainActivity.driver.getImg(),

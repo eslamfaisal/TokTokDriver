@@ -14,12 +14,13 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fekrah.toktokdriver.R;
+import com.fekrah.toktokdriver.activities.ChatActivity;
 import com.fekrah.toktokdriver.activities.ChatsRoomsActivity;
-import com.fekrah.toktokdriver.activities.CurrentOrderActivity;
 import com.fekrah.toktokdriver.activities.MainActivity;
 import com.fekrah.toktokdriver.models.OldOrder;
 import com.fekrah.toktokdriver.models.Order;
-import com.fekrah.toktokdriver.models.State;
+import com.fekrah.toktokdriver.models.OrderResponse;
+import com.fekrah.toktokdriver.models.Room;
 import com.fekrah.toktokdriver.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -129,16 +130,110 @@ public class TalabatFragment extends Fragment {
         ButterKnife.bind(this, mainView);
         hideOrder();
 
+
         send_offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CurrentOrderActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra(ORDER_ID, order);
-                getActivity().startActivity(intent);
+                MainActivity.setOrderSent(true);
+                MainActivity.mCountDownTimer.cancel();
+                MainActivity.mCountDownTimer.onFinish();
+                FirebaseDatabase.getInstance().getReference().child("Customer_current_order")
+                        .child(order.getUser_key())
+                        .child("accepted_driver").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
+                            Toast.makeText(getActivity(), "تم قبول هذا الطلب من قبل سائق اخر", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String responceKey = FirebaseDatabase.getInstance().getReference().push().getKey();
+                            OrderResponse orderResponse = new OrderResponse(
+                                    MainActivity.driver.getName(),
+                                    responceKey,
+                                    MainActivity.results[0].toString(),
+                                    FirebaseAuth.getInstance().getUid(),
+                                    MainActivity.driver.getImg(),
+                                    MainActivity.results[1].toString(),
+                                    4545,
+                                    54544f
+
+
+                            );
+                            FirebaseDatabase.getInstance().getReference().child("Customer_current_order")
+                                    .child(order.getUser_key()).child("accepted_driver")
+                                    .setValue(orderResponse).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        final Room room = new Room(
+                                                MainActivity.driver.getImg(),
+                                                "تم قبول الطلب",
+                                                System.currentTimeMillis(),
+                                                MainActivity.driver.getUser_key(),
+                                                MainActivity.driver.getName()
+                                        );
+                                        FirebaseDatabase.getInstance().getReference().child("rooms")
+                                                .child(order.getUser_key())
+                                                .child(MainActivity.driver.getUser_key())
+                                                .setValue(room).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    final Room room2 = new Room(
+                                                            order.getImage(),
+                                                            "",
+                                                            System.currentTimeMillis(),
+                                                            FirebaseAuth.getInstance().getUid(),
+                                                            order.getName());
+                                                    FirebaseDatabase.getInstance().getReference().child("rooms")
+                                                            .child(FirebaseAuth.getInstance().getUid())
+                                                            .child(FirebaseAuth.getInstance().getUid())
+                                                            .setValue(room2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                FirebaseDatabase.getInstance().getReference().child("drivers_current_order")
+                                                                        .child(MainActivity.driver.getUser_key()).child("offer").setValue("accept").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        FirebaseDatabase.getInstance().getReference().child("Customer_current_order")
+                                                                                .child(FirebaseAuth.getInstance().getUid())
+                                                                                .child("drivers").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                                            }
+                                                                        });
+
+
+                                                                    }
+                                                                });
+
+                                                            }
+                                                        }
+                                                    });
+
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+//
+//                Intent intent = new Intent(getActivity(), CurrentOrderActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                intent.putExtra(ORDER_ID, order);
+//                getActivity().startActivity(intent);
             }
         });
-
         refuse_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,7 +271,7 @@ public class TalabatFragment extends Fragment {
                     hideOrder();
                 } else {
                     if (dataSnapshot.child("offer").getValue() != null) {
-                        
+
                         if (dataSnapshot.child("offer").getValue().toString().equals("accept")) {
                             showAccepted();
                         } else if (dataSnapshot.child("offer").getValue().toString().equals("sent")) {
@@ -213,8 +308,8 @@ public class TalabatFragment extends Fragment {
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                Order order = dataSnapshot.getValue(Order.class);
-                                String oldOrderKey= FirebaseDatabase.getInstance().getReference().push().getKey();
+                                final Order order = dataSnapshot.getValue(Order.class);
+                                String oldOrderKey = FirebaseDatabase.getInstance().getReference().push().getKey();
                                 OldOrder oldOrder = new OldOrder(
                                         oldOrderKey,
                                         FirebaseAuth.getInstance().getUid(),
@@ -230,12 +325,12 @@ public class TalabatFragment extends Fragment {
                                         .setValue(oldOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             FirebaseDatabase.getInstance().getReference().child("drivers_current_order")
                                                     .child(FirebaseAuth.getInstance().getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()){
+                                                    if (task.isSuccessful()) {
                                                         finishOrder.setEnabled(true);
                                                     }
                                                 }
@@ -243,6 +338,7 @@ public class TalabatFragment extends Fragment {
                                         }
                                     }
                                 });
+
                             }
 
                             @Override

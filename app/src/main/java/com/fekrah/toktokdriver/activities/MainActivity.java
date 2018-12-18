@@ -74,7 +74,6 @@ import com.fekrah.toktokdriver.DissconnectService;
 import com.fekrah.toktokdriver.FloatingService;
 import com.fekrah.toktokdriver.R;
 import com.fekrah.toktokdriver.SamplePresenter;
-import com.fekrah.toktokdriver.adapters.OldOrdersAdapter;
 import com.fekrah.toktokdriver.fragments.TalabatFragment;
 import com.fekrah.toktokdriver.helper.CalculateDistanceTime;
 import com.fekrah.toktokdriver.models.Driver;
@@ -194,6 +193,7 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
     Timer timer;
 
     public static String[] results = new String[2];
+
     private View view;
     private Animation animation;
     public static Driver driver;
@@ -237,6 +237,7 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
         getDriverInfo();
 
     }
+
     public static boolean isOrderSent() {
         return orderSent;
     }
@@ -335,7 +336,7 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
                     final LatLng myLocationLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     receiverLocationMarkerOption = new MarkerOptions()
                             .position(receiverLatLng)
-                           // .icon(bitmapDescriptorFromVector(MainActivity.this, R.drawable.ic_house_marker))
+                            // .icon(bitmapDescriptorFromVector(MainActivity.this, R.drawable.ic_house_marker))
                             .title(getString(R.string.receiver_place) + " : " + order.getReceiver_location());
 
                     arrivalLocationMarkerOption = new MarkerOptions()
@@ -488,6 +489,24 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
                                             mProgressBar.setVisibility(View.VISIBLE);
                                             notificationContent(order.getDetails(), order.getArrival_location(), order.getReceiver_location());
                                             createNotify(user.getName(), user.getImg(), notificationContent(order.getDetails(), order.getArrival_location(), order.getReceiver_location()), "orders", 125);
+                                            CalculateDistanceTime distance_task = new CalculateDistanceTime(MainActivity.this);
+
+                                            distance_task.getDirectionsUrl(new LatLng(order.getA_l_lat(), order.getA_l_lng()), new LatLng(location.getLatitude(), location.getLongitude()), serverKey);
+
+                                            distance_task.setLoadListener(new CalculateDistanceTime.taskCompleteListener() {
+                                                @Override
+                                                public void taskCompleted(String[] time_distance) {
+//                approximate_time.setText("" + time_distance[1]);
+//                approximate_diatance.setText("" + time_distance[0]);
+//                results[0]= Float.parseFloat(time_distance[1]);
+                                                    results[0] = time_distance[0];
+                                                    results[1] = time_distance[1];
+
+                                                    Log.d("aaaaaaaaaaaaaa", "distance =" + results[0]);
+                                                    Log.d("aaaaaaaaaaaaaa", "time =" + results[1]);
+                                                }
+
+                                            });
                                         }
 
                                     }
@@ -645,8 +664,8 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
 
     private String notificationContent(String details, String arrival_location, String receiver_location) {
         return
-                getString(R.string.new_trip)  + "\n \n"
-                +
+                getString(R.string.new_trip) + "\n \n"
+                        +
                         getString(R.string.from) + arrival_location + "\n \n" + getString(R.string.to) + receiver_location;
     }
 
@@ -661,7 +680,6 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
                 .enableAutoManage(this, this)
                 .build();
     }
-
 
 
     @Override
@@ -682,7 +700,7 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
                             imgProfile = navHeader.findViewById(R.id.profile_image);
                             txtName.setText(driver.getName());
                             imgProfile.setImageURI(driver.getImg());
-                            startService(new Intent(getApplicationContext(), AcceptOrderIntentService.class));
+                          //  startService(new Intent(getApplicationContext(), AcceptOrderIntentService.class));
 
                         }
 
@@ -836,7 +854,6 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
                     }
                 });
     }
-
 
 
     public class MyTimerTask extends TimerTask {
@@ -1344,7 +1361,7 @@ public class MainActivity extends LocationBaseActivity implements OnMapReadyCall
 
         } else if (id == R.id.nave_balance) {
             startActivity(new Intent(this, BalanceActivity.class));
-        }else if (id==R.id.nav_old_orders){
+        } else if (id == R.id.nav_old_orders) {
             startActivity(new Intent(this, OldOrdersActivity.class));
         }
 
